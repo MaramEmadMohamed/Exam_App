@@ -1,0 +1,8 @@
+<svg width="420" height="81" viewBox="0 0 420 81" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <title>Exam App</title>
+  <rect width="420" height="81" rx="12" fill="#EFF6FF"/>
+  <path d="M28 18h45v10H40v9h29v9H40v9h33v10H28V18Z" fill="#2563EB"/>
+  <path d="M82 18h14l10 14 10-14h14l-17 22 17 22h-14l-10-14-10 14H82l17-22-17-22Z" fill="#1D4ED8"/>
+  <path d="M142 18h13v44h-13V18Zm8-4a7 7 0 1 0 0 14 7 7 0 0 0 0-14Z" fill="#2563EB"/>
+  <text x="181" y="52" fill="#1D4ED8" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="700">Exam App</text>
+</svg>
