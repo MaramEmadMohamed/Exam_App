@@ -2,29 +2,22 @@ import type {
   ILoginFormValues,
   ILoginResponse,
 } from "../components/layout/login/form/types/login";
-import type { IRegisterFormValues } from "../schemas/register-schema";
-import { apiClient } from "@/shared/lib/axios";
+import { api } from "@/shared/lib/axios";
 import { AUTH_ENDPOINT } from "./auth.endpoint";
+import type { IRegisterFormValues } from "../components/layout/register/form/types/register";
+import type { IApiResponse } from "@/shared/types/api";
 
 export async function loginApi(values: ILoginFormValues) {
-  const res = await apiClient.post<ILoginResponse>(
+  const res = await api.post<IApiResponse<ILoginResponse>>(
     `${AUTH_ENDPOINT}/login`,
     values,
   );
-  const response = res.data as ILoginResponse & {
-    accessToken?: string;
-    access_token?: string;
-    data?: {
-      token?: string;
-      accessToken?: string;
-      access_token?: string;
-    };
-    payload?: {
-      token?: string;
-      accessToken?: string;
-      access_token?: string;
-    };
-  };
+
+  if (!res.data.status) {
+    throw new Error(res.data.message || "Login failed");
+  }
+
+  const response = res.data.payload;
   const token =
     response.token ??
     response.accessToken ??
@@ -53,19 +46,19 @@ export async function registerApi(values: IRegisterFormValues) {
     password: values.password,
     confirmPassword: values.confirmPassword,
   };
-  const res = await apiClient.post(`${AUTH_ENDPOINT}/register`, payload);
+  const res = await api.post(`${AUTH_ENDPOINT}/register`, payload);
   return res.data;
 }
 
 export async function sendEmailVerificationApi(email: string) {
-  const res = await apiClient.post(`${AUTH_ENDPOINT}/send-email-verification`, {
+  const res = await api.post(`${AUTH_ENDPOINT}/send-email-verification`, {
     email,
   });
   return res.data;
 }
 
 export async function confirmEmailVerificationApi(email: string, code: string) {
-  const res = await apiClient.post(
+  const res = await api.post(
     `${AUTH_ENDPOINT}/confirm-email-verification`,
     { email, code },
   );

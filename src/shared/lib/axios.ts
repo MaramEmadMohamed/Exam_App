@@ -1,17 +1,16 @@
-import axios from "axios";
-import { TOKEN_KEY } from "@/features/auth/constant/token.constant";
+import axios, { type AxiosError, type AxiosResponse } from "axios";
+import type { IApiResponse, IErrorResponse } from "../types/api";
 
-export const apiClient = axios.create({
-  baseURL:
-    import.meta.env.VITE_API_URL ?? "https://exam-app.elevate-bootcamp.cloud",
+export const api = axios.create({
+  baseURL: import.meta.env.VITE_API_URL,
 });
 
-apiClient.interceptors.request.use((config) => {
-  const token = localStorage.getItem(TOKEN_KEY);
+api.interceptors.response.use(
+  (response: AxiosResponse<IApiResponse>) => response,
+  (error: AxiosError<IErrorResponse<unknown>>) => {
+    const message =
+      error.response?.data?.message ?? error.message ?? "Something went wrong";
 
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-
-  return config;
-});
+    return Promise.reject(new Error(message));
+  },
+);

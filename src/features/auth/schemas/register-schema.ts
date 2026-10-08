@@ -21,6 +21,7 @@ export const registerSchema = z
         /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/,
         "Use uppercase, lowercase, number, and special character",
       ),
+    gender: z.enum(["male", "female"]),
     confirmPassword: z.string(),
   })
   .refine((values) => values.password === values.confirmPassword, {
@@ -33,6 +34,7 @@ export const personalDetailsSchema = z.object({
   lastName: registerSchema.shape.lastName,
   username: registerSchema.shape.username,
   phone: registerSchema.shape.phone,
+  gender: registerSchema.shape.gender,
 });
 
 export type IRegisterFormValues = z.infer<typeof registerSchema>;

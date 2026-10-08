@@ -1,1 +1,1 @@
-export const AUTH_ENDPOINT = "/api/auth" as const;
+export const AUTH_ENDPOINT = "/auth" as const;

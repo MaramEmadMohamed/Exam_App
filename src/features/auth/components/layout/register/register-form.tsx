@@ -8,17 +8,15 @@ import { Field, FieldError, FieldGroup, FieldLabel } from "@/ui/field";
 import { Input } from "@/ui/input/input";
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/ui/input-otp";
 import FormFeedback from "@/shared/components/form-feedback";
-import {
-  personalDetailsSchema,
-  registerSchema,
-  type IRegisterFormValues,
-} from "@/features/auth/schemas/register-schema";
+
 import { useUserRegister } from "@/features/auth/apis/mutations/user-register";
 import {
   useConfirmEmailVerification,
   useSendEmailVerification,
 } from "@/features/auth/apis/mutations/email-verification";
 import { ArrowRight } from "lucide-react";
+import type { IRegisterFormValues } from "./form/types/register";
+import { personalDetailsSchema, registerSchema } from "@/features/auth/schemas/register-schema";
 
 export default function RegisterForm() {
   const { mutate: register, error, isPending } = useUserRegister();
@@ -28,6 +26,8 @@ export default function RegisterForm() {
   const [verificationCode, setVerificationCode] = useState("");
   const [secondsRemaining, setSecondsRemaining] = useState(0);
   const [countryCode, setCountryCode] = useState("+20");
+
+  
   const form = useForm<IRegisterFormValues>({
     defaultValues: {
       firstName: "",
@@ -94,15 +94,22 @@ export default function RegisterForm() {
   };
 
   const continueToPassword = async () => {
-    const details = form.getValues(["firstName", "lastName", "username", "phone"]);
+    const details = form.getValues([
+      "firstName",
+      "lastName",
+      "username",
+      "phone",
+      "gender",
+    ]);
     const result = personalDetailsSchema.safeParse({
       firstName: details[0],
       lastName: details[1],
       username: details[2],
       phone: details[3],
+      gender: details[4],
     });
 
-    form.clearErrors(["firstName", "lastName", "username", "phone"]);
+    form.clearErrors(["firstName", "lastName", "username", "phone", "gender"]);
     if (!result.success) {
       result.error.issues.forEach((issue) => {
         const field = issue.path[0];
@@ -110,7 +117,8 @@ export default function RegisterForm() {
           field === "firstName" ||
           field === "lastName" ||
           field === "username" ||
-          field === "phone"
+          field === "phone" ||
+          field === "gender"
         ) {
           form.setError(field, { message: issue.message });
         }
@@ -127,6 +135,7 @@ export default function RegisterForm() {
       phone: `${countryCode}${values.phone.replace(/^0+/, "")}`,
     });
   };
+  const handleRegisterSubmit = form.handleSubmit(onSubmit);
 
   return (
     <FormProvider {...form}>
@@ -135,7 +144,7 @@ export default function RegisterForm() {
           step === 1
             ? sendCode
             : step === 4
-              ? form.handleSubmit(onSubmit)
+              ? handleRegisterSubmit
               : (event) => event.preventDefault()
         }
         className="grid grid-cols-1 gap-5 sm:grid-cols-2"
@@ -243,6 +252,21 @@ export default function RegisterForm() {
                   />
                 </div>
                 <FieldError id="phone-error">{form.formState.errors.phone?.message}</FieldError>
+              </Field>
+              <Field>
+                <FieldLabel htmlFor="gender">Gender</FieldLabel>
+                <select
+                  id="gender"
+                  aria-invalid={!!form.formState.errors.gender}
+                  aria-describedby="gender-error"
+                  className="h-11.5 w-full border border-input bg-background px-3 text-sm outline-none transition-colors focus-visible:border-blue-500 focus-visible:ring-3 focus-visible:ring-blue-400/50"
+                  {...form.register("gender")}
+                >
+                  <option value="">Select gender</option>
+                  <option value="female">Female</option>
+                  <option value="male">Male</option>
+                </select>
+                <FieldError id="gender-error">{form.formState.errors.gender?.message}</FieldError>
               </Field>
             </div>
           </FieldGroup>

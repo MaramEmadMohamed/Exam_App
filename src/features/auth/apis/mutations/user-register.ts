@@ -3,7 +3,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router";
 import { toast } from "react-hot-toast";
 import { loginApi, registerApi } from "../auth.apis";
-import type { IRegisterFormValues } from "../../schemas/register-schema";
+import type { IRegisterFormValues } from "../../components/layout/register/form/types/register";
 import useToken from "../../hooks/use-token";
 
 export function useUserRegister() {

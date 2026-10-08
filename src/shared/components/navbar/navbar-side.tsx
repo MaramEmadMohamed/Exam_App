@@ -7,6 +7,7 @@ import {
   LayoutDashboard, 
   LogOut 
 } from "lucide-react";
+import Elevate from "@/assets/Elevate.png"
 import { Button } from "@/ui/button/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/ui/avatar";
 import useToken from "@/features/auth/hooks/use-token";
@@ -33,9 +34,7 @@ export default function NavbarSide() {
     <section className="bg-blue-50 px-4 py-6 h-full w-64 flex flex-col justify-between">
       <div className="flex flex-col items-start gap-6">
         <header className="flex flex-col items-start gap-3">
-          <h1 className="text-5xl font-extrabold tracking-wider text-slate-800">
-            ELEVATE
-          </h1>
+          <img src={Elevate} alt="Elevate" className="w-65" />
           <div className="flex items-center gap-2 text-blue-600">
             <FolderCode className="w-5 h-5" />
             <span className="font-bold text-lg tracking-wide">
@@ -68,7 +67,7 @@ export default function NavbarSide() {
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
           <div className="flex flex-col">
-            <span className="text-sm font-bold text-blue-600">Firstname</span>
+            <span className="text-sm font-bold text-blue-600">First name</span>
             <span className="text-xs text-slate-500">user-email@example.com</span>
           </div>
         </div>
