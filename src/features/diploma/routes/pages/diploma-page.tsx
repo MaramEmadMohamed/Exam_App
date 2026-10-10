@@ -1,11 +1,12 @@
+import { GraduationCap } from "lucide-react";
+import HeaderHero from "@/shared/components/header/header-hero";
+import DiplomaList from "../../components/diploma-list";
 
 export default function DiplomaPage() {
   return (
-     <section className="flex h-screen overflow-hidden bg-slate-50">
-      
-      
-      
-       
-     </section>
-  )
+    <>
+      <HeaderHero icon={GraduationCap}>Diplomas</HeaderHero>
+      <DiplomaList />
+    </>
+  );
 }

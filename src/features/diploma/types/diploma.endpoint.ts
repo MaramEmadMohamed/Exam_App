@@ -1,0 +1,1 @@
+export const DIPLOMA_ENDPOINT = "/diplomas" as const;

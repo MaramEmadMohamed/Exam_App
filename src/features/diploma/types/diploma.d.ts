@@ -50,3 +50,10 @@ export interface DiplomaDetails{
     createdAt:string,
     updatedAt:string
 }
+
+export interface DiplomaDetailsResponse {
+  status: boolean;
+  code: number;
+  payload?: { diploma: DiplomaDetails };
+  diploma?: DiplomaDetails;
+}

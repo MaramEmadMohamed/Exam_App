@@ -8,6 +8,7 @@ import { Button } from "@/ui/button/button";
 import { Link } from "react-router";
 import FormFeedback from "@/shared/components/form-feedback";
 import { useLogin } from "@/features/auth/apis/mutations/use-login";
+import { getApiErrorMessage } from "@/shared/lib/get-api-error-message";
 export default function LoginForm() {
   const { mutate: login, error, isPending } = useLogin();
  
@@ -37,9 +38,11 @@ export default function LoginForm() {
             id="input-field-username"
             type="text"
             placeholder="user123"
+            aria-invalid={!!form.formState.errors.username}
+            aria-describedby="username-error"
             {...form.register("username")}
           />
-          <FieldError>{form.formState.errors.username?.message}</FieldError>
+          <FieldError id="username-error">{form.formState.errors.username?.message}</FieldError>
         </Field>
 
         <Field>
@@ -48,9 +51,11 @@ export default function LoginForm() {
             id="password"
             type="password"
             placeholder="●●●●●●"
+            aria-invalid={!!form.formState.errors.password}
+            aria-describedby="password-error"
             {...form.register("password")}
           />
-          <FieldError>{form.formState.errors.password?.message}</FieldError>
+          <FieldError id="password-error">{form.formState.errors.password?.message}</FieldError>
           <FieldDescription className="text-right">
             <Button
               nativeButton={false}
@@ -62,7 +67,7 @@ export default function LoginForm() {
 
 
         {/* Feedback*/ }
-        <FormFeedback>{error?.message}</FormFeedback>
+        <FormFeedback>{error ? getApiErrorMessage(error) : null}</FormFeedback>
 
         {/* submit button form */}
         <Button

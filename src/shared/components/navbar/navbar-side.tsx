@@ -46,7 +46,7 @@ export default function NavbarSide() {
         <div className="flex flex-col items-center gap-2 w-full">
           <Button
             className="w-full flex items-center justify-start gap-2 bg-blue-100 text-blue-600 hover:bg-blue-200 shadow-none border border-blue-300"
-            onClick={() => navigate("/diploma")}
+            onClick={() => navigate("/diplomas")}
           >
             <GraduationCap className="w-5 h-5" /> Diplomas
           </Button>

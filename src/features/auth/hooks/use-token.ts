@@ -1,4 +1,4 @@
-import { TOKEN_KEY } from "../constant/token.constant";
+import { TOKEN_KEY } from "@/features/auth/constants/token.constant";
 
 interface IUseTokenReturn {
     /**

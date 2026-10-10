@@ -15,7 +15,7 @@ export default function HeaderHero({
   return (
     <h1
       className={cn(
-        "flex items-center gap-2 rounded-lg bg-blue-600 px-5 py-4 text-2xl font-bold text-white shadow-sm md:text-3xl",
+        "flex mt-2 items-center gap-2 rounded-lg bg-blue-600 px-5 py-4 text-2xl font-bold text-white shadow-sm md:text-3xl",
         className,
       )}
       {...props}

@@ -1,12 +1,13 @@
 export interface Exam {
   id: string;
-  _id?: string;
   title: string;
   description?: string;
-  diplomaId?: string;
+  image?: string;
   duration?: number;
-  questionCount?: number;
-  numberOfQuestions?: number;
+  questionsCount?: number;
+  diplomaId?: string;
+  diploma?: { id: string; title: string };
+  immutable?: boolean;
   createdAt?: string;
   updatedAt?: string;
 }
@@ -53,4 +54,36 @@ export interface Page<T> {
   total: number;
   page: number;
   limit: number;
+}
+export interface ExamsMetadata {
+  page: number;
+  limit: number;
+  total: number;
+  totalPages: number;
+}
+
+export interface ExamsResponse {
+  status: boolean;
+  code: number;
+  payload: {
+    data: Exam[];
+    metadata: ExamsMetadata;
+  };
+}
+
+// GET /api/exams/{id}
+export interface ExamResponse {
+  status?: boolean;
+  code?: number;
+  payload?: { exam?: Exam };
+  exam?: Exam;
+}
+export interface ExamsParams {
+  diplomaId?: string;
+  immutable?: boolean;
+  page?: number;
+  limit?: number;
+  sortBy?: "title" | "createdAt" | "questions";
+  sortOrder?: "asc" | "desc";
+  search?: string;
 }
